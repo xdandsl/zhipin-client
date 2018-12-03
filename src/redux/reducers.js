@@ -4,14 +4,16 @@
 //用来合并多个reducer函数
 import {combineReducers} from 'redux' ;
 
-function xxx(previousState , action) {
+const initXxxState = 0;
+function xxx(previousState = initXxxState , action) {
   switch (action.type){
     default :
       return previousState
   }
 }
 
-function yyy(previousState , action) {
+const initYyyState = {};
+function yyy(previousState = initYyyState , action) {
   switch (action.type){
     default :
       return previousState
