@@ -6,7 +6,7 @@ import React from 'react' ;
 import ReactDOM from 'react-dom' ;
 //引入路由组件
 import Login from './components/login' ;
-import Register from './components/register' ;
+import Register from './containers/register' ;
 import Main from './components/main' ;
 
 import {Provider} from 'react-redux' ;

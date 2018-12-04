@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import {NavBar , WingBlank ,List , InputItem ,WhiteSpace , Radio ,Button} from 'antd-mobile' ;
 //引入logo组件
 import Logo from '../logo/index' ;
+import './index.less' ;
 
 const Item = List.Item;
 
@@ -68,8 +69,10 @@ class Register extends Component {
   //设置点击注册按钮的逻辑：
   register = () => {
     //获取用户名、密码、确认密码。发送ajax请求
-    const {username ,password ,rePassWord} = this.state ;
-    console.log(username ,password ,rePassWord)
+    const { laoBan ,username ,password ,rePassWord} = this.state ;
+    console.log(username ,password ,rePassWord) ;
+    //发送ajax的注册请求。传递data数据。
+    this.props.register({username , password , type : laoBan ? 'laoban' : 'dashen'})
 
   };
   //注意：点击已注册按钮逻辑
@@ -80,22 +83,22 @@ class Register extends Component {
     // this.props.history.push('/login')
   };
 
-
-
   render () {
     let {laoBan} = this.state ;
+    const {errMsg} = this.props.user ;
     return (
       <div>
         <NavBar>硅谷直聘</NavBar>
         <Logo />
+        <p className="err-msg">{errMsg ? errMsg : ''}</p>
         <WingBlank>
           <List>
             {/*val是InputItem onChange的事件中默认传的形参，代表当前值*/}
-            <InputItem onChange = {val => this.handleChange('username',val)}>用户名：</InputItem>
+            <InputItem  onChange = {val => this.handleChange('username',val)}>用户名：</InputItem>
             <WhiteSpace/>
-            <InputItem onChange = {val => this.handleChange('password',val)}>密&nbsp;&nbsp;&nbsp;码：</InputItem>
+            <InputItem type = 'password' onChange = {val => this.handleChange('password',val)}>密&nbsp;&nbsp;&nbsp;码：</InputItem>
             <WhiteSpace/>
-            <InputItem onChange = {val => this.handleChange('rePassWord',val)}>确认密码：</InputItem>
+            <InputItem type = 'password' onChange = {val => this.handleChange('rePassWord',val)}>确认密码：</InputItem>
             <WhiteSpace/>
             <Item>
               用户类型：&nbsp;&nbsp;&nbsp;&nbsp;

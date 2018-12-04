@@ -3,10 +3,20 @@
 
 //用来合并多个reducer函数
 import {combineReducers} from 'redux' ;
+import {AUTH_SUCCESS , AUTH_ERROR} from './action-types' ;
 
-const initXxxState = 0;
-function xxx(previousState = initXxxState , action) {
+const initXxxState = {
+  username : '' ,
+  _id: '' ,
+  type: '' ,
+  errMsg: ''
+};
+function user(previousState = initXxxState , action) {
   switch (action.type){
+    case AUTH_SUCCESS :
+      return action.data ;
+    case AUTH_ERROR :
+      return action.data ;
     default :
       return previousState
   }
@@ -20,9 +30,10 @@ function yyy(previousState = initYyyState , action) {
   }
 }
 
+//默认暴露合并后的reducers函数
+// {xxx: function xxx() {}, yyy: function yyy() {}}
 export default combineReducers({
-  xxx ,
-  yyy
+  user
 })
 
 
