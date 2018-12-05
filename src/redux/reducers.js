@@ -9,14 +9,21 @@ const initXxxState = {
   username : '' ,
   _id: '' ,
   type: '' ,
-  errMsg: ''
+  errMsg: '' ,
+  redirectTo: '',
+  header: '',
+  post: '',
+  company: '',
+  salary: '',
+  info: ''
 };
 function user(previousState = initXxxState , action) {
   switch (action.type){
     case AUTH_SUCCESS :
-      return action.data ;
+      //获取重定向的路径
+      return {...action.data , redirectTo:getRedirectPath( action.data.type , action.data.header)} ;
     case AUTH_ERROR :
-      return action.data ;
+      return {...initXxxState , ...action.data} ;
     default :
       return previousState
   }
@@ -36,5 +43,18 @@ export default combineReducers({
   user
 })
 
+function getRedirectPath(type,header) {
+  let path = '';
+  if(type === 'dashen'){
+      path = '/dashen'
+  }else if (type === 'laoban'){
+    path = '/laoban'
+  }
+  if(!header){
+    path += 'info'
+  }
+
+  return path ;
+}
 
 

@@ -5,7 +5,8 @@ import React, {Component} from 'react';
 import {NavBar , WingBlank ,List , InputItem ,WhiteSpace , Radio ,Button} from 'antd-mobile' ;
 //引入logo组件
 import Logo from '../logo/index' ;
-import './index.less' ;
+
+import {Redirect} from 'react-router-dom' ;
 
 const Item = List.Item;
 
@@ -15,7 +16,7 @@ class Register extends Component {
     laoBan : true ,
     username : '' ,
     password : '' ,
-    rePassWord : ''
+    rePassword : ''
   };
 
   //设置选中老板或者大神的逻辑：
@@ -69,10 +70,10 @@ class Register extends Component {
   //设置点击注册按钮的逻辑：
   register = () => {
     //获取用户名、密码、确认密码。发送ajax请求
-    const { laoBan ,username ,password ,rePassWord} = this.state ;
-    console.log(username ,password ,rePassWord) ;
+    const { laoBan ,username ,password ,rePassword} = this.state ;
+    console.log(username ,password ,rePassword) ;
     //发送ajax的注册请求。传递data数据。
-    this.props.register({username , password , type : laoBan ? 'laoban' : 'dashen'})
+    this.props.register({username , password  ,rePassword, type : laoBan ? 'laoban' : 'dashen'})
 
   };
   //注意：点击已注册按钮逻辑
@@ -85,7 +86,12 @@ class Register extends Component {
 
   render () {
     let {laoBan} = this.state ;
-    const {errMsg} = this.props.user ;
+    const {errMsg , redirectTo} = this.props.user ;
+
+    if(redirectTo){
+      return <Redirect to={redirectTo} />
+    }
+
     return (
       <div>
         <NavBar>硅谷直聘</NavBar>
@@ -98,7 +104,7 @@ class Register extends Component {
             <WhiteSpace/>
             <InputItem type = 'password' onChange = {val => this.handleChange('password',val)}>密&nbsp;&nbsp;&nbsp;码：</InputItem>
             <WhiteSpace/>
-            <InputItem type = 'password' onChange = {val => this.handleChange('rePassWord',val)}>确认密码：</InputItem>
+            <InputItem type = 'password' onChange = {val => this.handleChange('rePassword',val)}>确认密码：</InputItem>
             <WhiteSpace/>
             <Item>
               用户类型：&nbsp;&nbsp;&nbsp;&nbsp;

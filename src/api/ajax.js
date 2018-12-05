@@ -19,10 +19,10 @@ export default async function (method = 'GET' , url  , data) {
     qs = qs.substring( 0 ,qs.length-1);
   }
   //2，发送请求根据请求方式
-  const type = method.toUpperCase ;
+  const type = method.toUpperCase();
   if(type === 'GET'){
     //发送GET请求
-    const result = await axios.get(`${url}?${qs}`) ;
+    return  axios.get(`${url}?${qs}`) ;
     //将得到的响应数据返回出去
     //result:
     //成功:
@@ -39,12 +39,11 @@ export default async function (method = 'GET' , url  , data) {
     //   "code": 1,
     //   "msg": "此用户已存在"
     // }
-    return result;
   }else if(type === 'POST'){
     //发送post请求(注意请求方式)
-    const result = await axios.post(url , qs , {
+    return  axios.post(url , qs , {
       'content-type': 'application/x-www-form-urlencoded'
     })
-    return result;
+
   }
 }

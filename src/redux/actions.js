@@ -7,7 +7,7 @@
  */
 
 //目的：使用redux管理相关的数据状态。
-import {reqRegister} from '../api/index' ;
+import {reqRegister , reqLogin , reqUpdate} from '../api/index' ;
 import {AUTH_SUCCESS,AUTH_ERROR} from './action-types';
 
 export const authSuccess = data => ({type :AUTH_SUCCESS , data});
@@ -46,4 +46,72 @@ export const register = ({username , password , rePassword , type}) => {
         }
       )
   }
+};
+
+//定义异步的action对象处理登陆逻辑。
+export const login = ({username , password}) => {
+  //表单验证
+  if (!username) {
+    return authError({errMsg: '请输入用户名'});
+  } else if (!password) {
+    return authError({errMsg: '请输入密码'});
+  }
+
+  return dispatch => {
+    reqLogin({username , password})
+      .then(
+        //请求成功
+        ({data}) => {
+          if(data.code === 0){
+            dispatch(authSuccess(data.data))
+          }else{
+            dispatch(authError({errMsg: data.msg}))
+          }
+        }
+      )
+      .catch(
+        //请求失败
+        err => {
+          dispatch(authError({errMsg: '网络错误，请刷新试试~'}));
+        }
+      )
+  }
+};
+
+//定义异步的action对象处理个人登陆信息逻辑
+export const update = ({header , post , company , salary ,info}) => {
+  //表单验证
+  if(!header){
+    return authError({errMsg : '请选择头像'})
+  }else if(!post){
+    return authError({errMsg : '请选择职位'})
+  }else if(!company){
+    return authError({errMsg : '请选择公司'})
+  }else if(!salary){
+    return authError({errMsg : '请选择薪资'})
+  }else if(!info){
+    return authError({errMsg : '请选择职位描述'})
+  }
+  
+  //异步的action对象
+  return dispatch => {
+    //发送请求
+    reqUpdate({header , post , company , salary , info})
+      .then(
+        ({data}) => {
+          //成功的响应(把请求回来的数据添加到我的redux中，通过分发action对象的形式)
+          if(data.code === 0){
+            dispatch(authSuccess(data.data))
+          }else{
+            //失败的响应
+            dispatch(authError({errMsg : data.msg}))
+          }
+        }
+      )
+      .catch(
+        //请求失败
+        dispatch(authError({errMsg : '网络不稳定，请稍后重试'}))
+      )
+  }
+  
 };

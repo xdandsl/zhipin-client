@@ -10,7 +10,10 @@ import ajax from './ajax' ;
 const profix = '';
 
 //发送注册请求，接收数据(暴露给注册组件，从而传递数据发送请求)
-export const reqRegister = data => ajax('GET' ,`${profix}/register` ,data );
+export const reqRegister = data => ajax('POST' ,`${profix}/register` ,data );
 
+//发送登录请求
+export const reqLogin = data => ajax('POST',`${profix}/login` ,data  );
 
-
+//发送个人信息完善的请求（老板大神都需要完善）
+export const reqUpdate = data => ajax('POST' , `${profix}/update` , data);
