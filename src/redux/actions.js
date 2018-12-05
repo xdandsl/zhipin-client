@@ -79,18 +79,18 @@ export const login = ({username , password}) => {
 };
 
 //定义异步的action对象处理个人登陆信息逻辑
-export const update = ({header , post , company , salary ,info}) => {
+export const update = ({header , post , company , salary ,info , type}) => {
   //表单验证
   if(!header){
     return authError({errMsg : '请选择头像'})
   }else if(!post){
-    return authError({errMsg : '请选择职位'})
-  }else if(!company){
+    return authError({errMsg : type === 'laoban' ? '请选择招聘职位' : '请选择求职岗位'})
+  }else if(type === 'laoban' && !company){
     return authError({errMsg : '请选择公司'})
-  }else if(!salary){
+  }else if(type === 'laoban' && !salary){
     return authError({errMsg : '请选择薪资'})
   }else if(!info){
-    return authError({errMsg : '请选择职位描述'})
+    return authError({errMsg :  type === 'laoban' ?  '请填写职位描述' : '请填写个人介绍' })
   }
   
   //异步的action对象
