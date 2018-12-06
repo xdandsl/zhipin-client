@@ -42,7 +42,8 @@ class LaobanInfo extends Component {
     const {errMsg , redirectTo} = this.props.user;
 
     //这个是重定向。上来判断是否有redirectTo，如果有去重定向的地址
-    if(redirectTo){
+    //只有重定向的地址为/laoban才会重定向
+    if(redirectTo === '/laoban'){
       return <Redirect to={redirectTo} />
     }
 
