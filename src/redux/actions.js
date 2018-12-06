@@ -7,11 +7,26 @@
  */
 
 //目的：使用redux管理相关的数据状态。
-import {reqRegister , reqLogin , reqUpdate} from '../api/index' ;
-import {AUTH_SUCCESS,AUTH_ERROR} from './action-types';
+import {reqRegister , reqLogin , reqUpdate , reqGetUserInfo , reqGetUserList} from '../api/index' ;
+import {
+  AUTH_SUCCESS ,
+  AUTH_ERROR ,
+  UPDATE_USER_INFO ,
+  RESET_USER_INFO ,
+  UPDATE_USER_LIST ,
+  RESET_USER_LIST
+}
+  from './action-types';
 
 export const authSuccess = data => ({type :AUTH_SUCCESS , data});
 export const authError = data => ({type :AUTH_ERROR , data});
+
+export const updateUserInfo = data => ({type : UPDATE_USER_INFO , data});
+export const resetUserInfo = data => ({type : RESET_USER_INFO , data});
+
+export const updateUserList = data => ({type : UPDATE_USER_LIST , data});
+export const resetUserList = ()=> ({type :  RESET_USER_LIST });
+
 
 //定义异步的action对象。
 export const register = ({username , password , rePassword , type}) => {
@@ -114,4 +129,58 @@ export const update = ({header , post , company , salary ,info , type}) => {
       )
   }
   
+};
+
+//定义异步的action对象处理请求用户信息的方法
+export const getUserInfo = () => {
+  //没有表单验证
+  //发送ajax请求
+  return dispatch => {
+    reqGetUserInfo()
+      .then(
+        ({data}) => {
+          //成功的响应
+          if(data.code === 0){
+            dispatch(updateUserInfo(data.data));
+          }else if(data.code === 1){
+            //失败的响应
+            dispatch(resetUserInfo({errMsg:data.msg}));
+          }
+        }
+      )
+      .catch(
+        //请求失败
+        err => {
+          dispatch(resetUserInfo({errMsg:'网络出错，请刷新试试'}))
+        }
+      )
+
+  }
+};
+
+//定义异步的action对象请求大神列表或者老板列表
+export const getUserList = (type) => {
+  //没有表单验证
+  //发送ajax请求
+  return dispatch => {
+    reqGetUserList(type)
+      .then(
+        ({data}) => {
+          //成功的响应
+          if(data.code === 0){
+            dispatch(updateUserList(data.data));
+          }else{
+            //失败的响应
+            dispatch(resetUserList());
+          }
+        }
+      )
+      .catch(
+        //请求失败
+        err => {
+          dispatch(resetUserList());
+        }
+      )
+
+  }
 };

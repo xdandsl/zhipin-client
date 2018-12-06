@@ -3,7 +3,15 @@
 
 //用来合并多个reducer函数
 import {combineReducers} from 'redux' ;
-import {AUTH_SUCCESS , AUTH_ERROR} from './action-types' ;
+import{
+  AUTH_SUCCESS ,
+  AUTH_ERROR ,
+  UPDATE_USER_INFO ,
+  RESET_USER_INFO ,
+  UPDATE_USER_LIST ,
+  RESET_USER_LIST
+}
+  from './action-types' ;
 
 const initXxxState = {
   username : '' ,
@@ -24,14 +32,22 @@ function user(previousState = initXxxState , action) {
       return {...action.data , redirectTo:getRedirectPath( action.data.type , action.data.header)} ;
     case AUTH_ERROR :
       return {...initXxxState , ...action.data} ;
+    case UPDATE_USER_INFO :
+      return {...action.data , redirectTo:getRedirectPath( action.data.type , action.data.header)} ;
+    case RESET_USER_INFO :
+      return {...initXxxState , ...action.data} ;
     default :
       return previousState
   }
 }
 
-const initYyyState = {};
-function yyy(previousState = initYyyState , action) {
+const initYyyState = [];
+function userList(previousState = initYyyState , action) {
   switch (action.type){
+    case UPDATE_USER_LIST :
+      return action.data ;
+    case RESET_USER_LIST :
+      return [] ;
     default :
       return previousState
   }
@@ -40,7 +56,8 @@ function yyy(previousState = initYyyState , action) {
 //默认暴露合并后的reducers函数
 // {xxx: function xxx() {}, yyy: function yyy() {}}
 export default combineReducers({
-  user
+  user ,
+  userList
 })
 
 function getRedirectPath(type,header) {

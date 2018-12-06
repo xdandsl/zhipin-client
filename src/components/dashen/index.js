@@ -5,7 +5,7 @@ import { Card, WingBlank, WhiteSpace } from 'antd-mobile';
 import PropTypes from 'prop-types';
 
 
-class Laoban extends Component {
+class Dashen extends Component {
   static propTypes = {
     userList : PropTypes.array.isRequired ,
     getUserList : PropTypes.func.isRequired
@@ -16,7 +16,7 @@ class Laoban extends Component {
     //防止在三个页面间切换的时候的出现多次请求数据（因为如果不判断就会出现切换一次，请求一次数据）
     if(!this.props.userList.length){
       //发送请求(传type)
-      this.props.getUserList('dashen');
+      this.props.getUserList('laoban');
 
     }
   }
@@ -26,7 +26,7 @@ class Laoban extends Component {
     const userList = this.props.userList.filter(item => item.header);
 
     return (
-      <div className="laoban">
+      <div>
         <WingBlank size="lg">
           <WhiteSpace size="lg" />
           {
@@ -39,6 +39,8 @@ class Laoban extends Component {
                  />
                  <Card.Body>
                    <div>职位：{item.post}</div>
+                   <div>公司：{item.company}</div>
+                   <div>月薪：{item.salary}</div>
                    <div>描述：{item.info}</div>
                  </Card.Body>
                  <WhiteSpace size="lg" />
@@ -52,4 +54,4 @@ class Laoban extends Component {
   }
 }
 
-export default Laoban;
+export default Dashen;

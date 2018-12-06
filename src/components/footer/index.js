@@ -13,7 +13,7 @@ const Item = TabBar.Item;
 
 class Footer extends Component {
   static propTypes = {
-    navList : PropTypes.array.isRequired
+    navList : PropTypes.array.isRequired ,
   };
 
   //点击实现页面路由的跳转：（编程式导航）
@@ -24,10 +24,10 @@ class Footer extends Component {
   render () {
     //判断是大神界面还是老板页面。如果是大神页面，则第一个显示老板列表。否则显示大神列表
     //过滤navList,得到大神和老板中的一个。
-    const type = 'laoban'; //从redux中获取状态
-    const filter = type === 'laoban' ? '/dashen' : '/laoban';
+    // const type = 'laoban'; //从redux中获取状态
+    const filter = this.props.type === 'laoban' ? '/dashen' : '/laoban';
     //过滤掉老板或大神的数据
-    const currNavList = this.props.navList.filter(item => filter !== item.path);
+    const currNavList = this.props.navList.filter(item => filter !== item.path );
 
     //注意：通过img标签引入我的图片资源，src=require('路径')
     //selected是否被选中：当前页面的地址是否等于item.path   当前页面的路径：路中组建的location中的pathname

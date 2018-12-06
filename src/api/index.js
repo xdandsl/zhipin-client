@@ -17,3 +17,8 @@ export const reqLogin = data => ajax('POST',`${profix}/login` ,data  );
 
 //发送个人信息完善的请求（老板大神都需要完善）
 export const reqUpdate = data => ajax('POST' , `${profix}/update` , data);
+
+//发送用户信息的请求
+export const reqGetUserInfo = () => ajax('GET' , `${profix}/user`);
+
+export const reqGetUserList = type => ajax('GET' , `${profix}/userlist` , {type});

@@ -51,7 +51,7 @@ class Login extends Component {
           <List>
             <InputItem onChange = {val => this.handleClick('username', val)}>用户名：</InputItem>
             <WhiteSpace/>
-            <InputItem onChange = {val => this.handleClick('password', val)}  >密&nbsp;&nbsp;&nbsp;码：</InputItem>
+            <InputItem onChange = {val => this.handleClick('password', val)}  type="password">密&nbsp;&nbsp;&nbsp;码：</InputItem>
             <WhiteSpace/>
             <Button type="primary" onClick = {this.goMain}>登陆</Button>
             <Button onClick={this.goRegister}>还没有账户</Button>
