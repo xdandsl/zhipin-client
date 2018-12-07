@@ -13,7 +13,7 @@ import Cookies from 'js-cookie';
 import {NavBar , Icon} from 'antd-mobile';
 
 import Message from '../message/index';
-import Personal from '../personal/index';
+import Personal from '../../containers/personal';
 import PropTypes from 'prop-types';
 
 import './index.less';
@@ -22,7 +22,7 @@ import './index.less';
 class Main extends Component {
   static propTypes = {
     user : PropTypes.object.isRequired
-  };
+    };
   //定义数据：
   navList = [
     {path:'/dashen',title:'老板列表' , icon: 'dashen', text: '老板'},
